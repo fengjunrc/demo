@@ -1,0 +1,12 @@
+server:
+  port: 9090
+  context-path: /demo
+
+book:
+  author: luxun
+  name: a bloom tree
+  
+logging:
+  file: D:/log/test.log
+  level: DEBUG
+debug: true
