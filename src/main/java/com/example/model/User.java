@@ -1,8 +1,9 @@
 package com.example.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
