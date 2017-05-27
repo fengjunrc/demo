@@ -18,7 +18,7 @@ public class UserServiceImpl  implements IUserService {
     @Resource
     private UserMapper userMapper;
 
-    public List<User> getAllUsers(Integer pageNo,Integer pageSize) {
+    public List<User> getAllUsers(Integer pageNo, Integer pageSize) {
         PageHelper.startPage(pageNo,pageSize);
       return  userMapper.selectAll();
     }
@@ -40,5 +40,10 @@ public class UserServiceImpl  implements IUserService {
     @Override
     public int deleteUser(Integer id) {
         return userMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userMapper.selectAll();
     }
 }

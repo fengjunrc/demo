@@ -7,7 +7,9 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.data.redis.core.*;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -22,13 +24,33 @@ public class UserController {
     private IUserService userService;
 
     @Resource
-    protected RedisTemplate<String,Object> redisTemplate;
+    private  RedisTemplate redisTemplate;
 
     @RequestMapping(value="/getAllUsers")
-    public PageInfo<User> getAllUsers(Integer pageNo,Integer pageSize){
+    public PageInfo<User> getAllUsers(Integer pageNo, Integer pageSize){
         List<User> userList =  userService.getAllUsers(pageNo,pageSize);
-        redisTemplate.opsForList().leftPushAll("userList",new Date().getTime(),userList);
-        //redisTemplate.opsForSet().add("userList",new Date().getTime(),userList);
+
+        List<String> list = new ArrayList<String>();
+        list.add("aaa");
+        list.add("bbb");
+        list.add("ccc");
+        redisTemplate.opsForList().leftPushAll("test1",list);
+        //List<String> resutList =(List<String>) redisTemplate.opsForList().leftPop("test");
+        System.out.println(redisTemplate.opsForList().size("test1"));
+        long size = redisTemplate.opsForList().size("test1");
+        for (int i=0 ;i<size;i++){
+            System.out.println(redisTemplate.opsForList().leftPop("test1"));
+        }
+
+        Set<String> set = new HashSet<String>();
+        set.add("w1");
+        set.add("w2");
+        set.add("w3");
+        redisTemplate.opsForSet().add("setTest",set);
+        long ssize = redisTemplate.opsForSet().add(set);
+        for (int i=0 ;i<ssize;i++){
+            System.out.println(redisTemplate.opsForSet().pop("setTest"));
+        }
         return new PageInfo<>(userList);
     }
 
@@ -64,8 +86,11 @@ public class UserController {
         codeList.add(u2);
         RedisCacheUtil  RedisCacheUtil = new RedisCacheUtil();
         RedisCacheUtil.setCacheList(key, codeList);
-        System.out.println("保存数据成功！");
+    }
 
-
+    @RequestMapping(value = "/index",method = RequestMethod.GET)
+    public ModelAndView toIndex(){
+        ModelAndView mv = new ModelAndView("index");
+        return mv;
     }
 }

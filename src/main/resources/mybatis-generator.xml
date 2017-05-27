@@ -27,7 +27,7 @@
         <javaClientGenerator targetPackage="com.example.mapper" targetProject="src/main/java"
                              type="XMLMAPPER"/>
 
-        <table tableName="user">
+        <table tableName="rc_order_paypal">
             <!--mysql 配置-->
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
             <!--oracle 配置-->

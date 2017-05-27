@@ -13,7 +13,7 @@ public interface IUserService {
      * @param pageSize
      * @return
      */
-    List<User> getAllUsers(Integer pageNo,Integer pageSize);
+    List<User> getAllUsers(Integer pageNo, Integer pageSize);
 
 
     int addUser(User user);
@@ -21,4 +21,6 @@ public interface IUserService {
     int updateUser(User user);
 
     int deleteUser(Integer id);
+
+    List<User> getAllUsers();
 }
